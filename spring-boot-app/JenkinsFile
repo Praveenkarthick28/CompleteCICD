@@ -12,11 +12,12 @@ pipeline {
                 // git branch 'main' url 'https://github.com/Praveenkarthick28/CompleteCICD.git'
             }
         }
-        stage('Build and test') {
-            steps {
-                sh 'ls -ltr'
-                sh 'cd spring-boot-app && mvn clean package'
-            }
+        stage('Build and Test') {
+              steps {
+              sh 'ls -ltr'
+               // build the project and create a JAR file
+               sh 'cd spring-boot-app && mvn clean package'
+               }
         }
         stage('Static code analysis') {
             environment {
