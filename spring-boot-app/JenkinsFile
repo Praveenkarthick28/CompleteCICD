@@ -39,7 +39,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'github', variable: 'jenkins token')]) {
                     sh """
                         git config --global user.email "karthikjeeva619@gmail.com"
-                        git config --global user.name "praveenkarthick28"
+                        git config --global user.name "${GIT_USER}"
                         BUILD_NUMBER=\${BUILD_NUMBER}
                         sed -i "s/replaceImageTag/\${BUILD_NUMBER}/g" spring-boot-app-manifests/deployment.yml
                         git add spring-boot-app-manifests/deployment.yml
