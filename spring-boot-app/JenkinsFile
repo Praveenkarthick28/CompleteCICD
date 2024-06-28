@@ -44,7 +44,7 @@ pipeline {
                         sed -i "s/replaceImageTag/\${BUILD_NUMBER}/g" spring-boot-app-manifests/deployment.yml
                         git add spring-boot-app-manifests/deployment.yml
                         git commit -m "Update deployment image to version \${BUILD_NUMBER}"
-                        git push https://${jenkins token}@github.com/${GIT_USER}/${GIT_REPO_NAME} HEAD:main
+                        git push @github.com/${GIT_USER}/${GIT_REPO_NAME"}>https://${jenkins token}@github.com/${GIT_USER}/${GIT_REPO_NAME} HEAD:main
 
                     """
                 }
