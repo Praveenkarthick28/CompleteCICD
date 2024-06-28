@@ -44,9 +44,7 @@ pipeline {
                         sed -i "s/replaceImageTag/\${BUILD_NUMBER}/g" spring-boot-app-manifests/deployment.yml
                         git add spring-boot-app-manifests/deployment.yml
                         git commit -m "Update deployment image to version \${BUILD_NUMBER}"
-                        git remote -v
-                        git remote set-url origin https://github.com/Praveenkarthick28/CompleteCICD.git
-                        git push https://github.com/${GIT_user}/${GIT_REPO_NAME} HEAD:main
+                        git push git@github.com:Praveenkarthick28/CompleteCICD.git HEAD:main
 
                     """
                 }
