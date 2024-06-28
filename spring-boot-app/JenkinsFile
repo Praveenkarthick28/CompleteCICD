@@ -36,8 +36,7 @@ pipeline {
                 GIT_USER = "Praveenkarthick28"
             }
             steps {
-                withCredentials([string(credentialsId: 'github', variable: 'jenkins token')]) {
-                    sh """
+                  sh """
                         git config --global user.email "karthikjeeva619@gmail.com"
                         git config --global user.name "${GIT_USER}"
                         BUILD_NUMBER=\${BUILD_NUMBER}
@@ -45,8 +44,7 @@ pipeline {
                         git add spring-boot-app-manifests/deployment.yml
                         git commit -m "Update deployment image to version \${BUILD_NUMBER}"
                         git push https://git@github.com/${GIT_USER}/${GIT_REPO_NAME} HEAD:main
-                    """
-                }
+                    ""
             }
         }
     }
