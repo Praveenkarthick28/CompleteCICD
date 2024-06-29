@@ -4,14 +4,15 @@ pipeline {
         stage('Checkout code') {
             steps {
                 echo 'Passed' // Placeholder for actual checkout logic
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/Praveenkarthick28/CompleteCICD.git']]])
+                // git branch 'main' url 'https://github.com/Praveenkarthick28/CompleteCICD.git'
             }
         }
         stage('Build and Test') {
-            steps {
-                sh 'ls -ltr'
-                sh 'cd spring-boot-app && mvn clean package'
-            }
+              steps {
+              sh 'ls -ltr'
+               // build the project and create a JAR file
+               sh 'cd spring-boot-app && mvn clean package'
+               }
         }
         stage('Build and Push Docker Image') {
             environment {
@@ -21,12 +22,12 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'cd spring-boot-app && docker build -t ${DOCKER_IMAGE} --platform linux/amd64 .'
-                    def dockerImage = docker.image("${DOCKER_IMAGE}")
-                    docker.withRegistry('https://index.docker.io/v1/', "dockerhub") {
-                        dockerImage.push()
-                    }
-                }
+                      sh 'cd spring-boot-app && docker build -t ${DOCKER_IMAGE} --platform linux/amd64 .'
+                      def dockerImage = docker.image("${DOCKER_IMAGE}")
+                      docker.withRegistry('https://index.docker.io/v1/', "dockerhub") {
+                      dockerImage.push()
+                      }
+                 }
             }
         }
         stage('Image update') {
@@ -49,4 +50,3 @@ pipeline {
         }
     }
   }
-}
