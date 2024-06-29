@@ -32,19 +32,21 @@ pipeline {
         stage('Image update') {
             environment {
                 GIT_REPO_NAME = "CompleteCICD"
-                GIT_USER = "Praveenkarthick28"
+                GIT_USER_NAME= "Praveenkarthick28"
             }
-            steps {
-                sh """
-                    git config --global user.email "karthikjeeva619@gmail.com"
-                    git config --global user.name "praveen"
-                    BUILD_NUMBER=\${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/\${BUILD_NUMBER}/g" spring-boot-app-manifests/deployment.yml
+            ssteps {
+            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                sh '''
+                    git config user.email "karthikjeeva619@gmail.com"
+                    git config user.name "praveen"
+                    BUILD_NUMBER=${BUILD_NUMBER}
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" spring-boot-app-manifests/deployment.yml
                     git add spring-boot-app-manifests/deployment.yml
-                    git commit -m "Update deployment image to version \${BUILD_NUMBER}"
-                    git push https://${github}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                """
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                    git push @github.com/${GIT_USER_NAME}/${GIT_REPO_NAME">https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                '''
             }
         }
     }
+  }
 }
